@@ -81,33 +81,19 @@ else {
 			while ($a = mysqli_fetch_array($ab)) {
 				# code...
 		?>
-<!-- 	<tr>
-		<td> -->
-			<!-- <span class="input-group-text"><input type="checkbox" >
-			 </span> -->
 			<div class="input-group">
 			<span class="input-group-addon">
 			<input type="checkbox" name="TxtKdGejala[]" value="<?php echo  $a['kd_gejala']; ?>">
 			</span>
 			<input class="form-control" value="<?php echo strip_tags($a['nm_gejala']); ?>" readonly>
 			</div><br>
-		<!-- </td>
-		</tr> -->
 		<?php 
 			}
 
 		 ?>
-<!-- 		<td>
-			<span class="input-group-text"><input type="checkbox" name="RbPilih" value="TIDAK">
-			Salah (TIDAK) </span>
-		</td>
-	</tr> -->
-	<!-- <tr>
-		<td align="center"> -->
 			<input type="hidden" name="RbPilih" value="YA">
-			<input type="submit" class="btn btn-success text-center" name="Submit" value="LANJUT >>"></td>
-	<!-- /tr>
-	</table> -->
+			<input type="submit" class="btn btn-success text-center" name="Submit" value="PROSES >>"></td>
+
 </form>
 
   </div>
