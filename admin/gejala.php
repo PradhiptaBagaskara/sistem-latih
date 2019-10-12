@@ -40,11 +40,12 @@
   <table class="table" width="450" border="0" cellpadding="2" cellspacing="1" align="center">
   <tr class="success text-center">
         <td colspan="2" >INPUT Ciri Bentuk Wajah</td>
-      </tr>
+  </tr>
   <tr>
     <td>Kode</td>
-    <td><input class="form-control" name="kode" type="text" maxlength="4" size="6" value="<?php echo kdauto("gejala","C"); ?>" disabled="disabled">
-    <input class="form-control" name="kode" type="hidden" value="<?php echo kdauto("gejala","C"); ?>"></td>
+    <td><input class="form-control" name="kode" type="text" maxlength="4" size="6" value="<?php echo kdauto("gejala","C"); ?>" readonly>
+    <input class="form-control" name="kode" type="hidden" value="<?php echo kdauto("gejala","C"); ?>">
+	</td>
   </tr>
   <tr>
     <td width="90"> Nama Ciri</td>
@@ -106,7 +107,7 @@ $row=mysqli_fetch_array($rs);
   <tr>
     <td>Kode Ciri</td>
     <td><input class="form-control" name="kd" type="text" maxlength="4" size="6" value="<?php echo $row['kd_gejala']; ?>" disabled="disabled">
-    	<input name="id" type="hidden" value="<?php echo $row['kd_gejala']; ?>" >
+    	<input name="id" type="text" value="<?php echo $row['kd_gejala']; ?>" >
     </td>
   </tr>
   <tr>

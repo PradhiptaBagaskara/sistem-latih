@@ -56,46 +56,53 @@ if ($RbPilih == "YA") {
 	if ($data_cek >= 1) {
 		# Kode saat tmp_analisa tidak kosong
 		DelTmpSakit($NOIP);
-		$sql_tmp = "SELECT * FROM tmp_analisa 
-					WHERE kd_gejala='$TxtKdGejala' 
-					AND noip='$NOIP'";
-		$qry_tmp = mysqli_query($koneksi, $sql_tmp);
-		while ($data_tmp = mysqli_fetch_array($qry_tmp)) {
-			$sql_rsolusi = "SELECT * FROM rule 
-							WHERE kd_solusi='$data_tmp[kd_solusi]' 
-							GROUP BY kd_solusi";
-			$qry_rsolusi = mysqli_query($koneksi, $sql_rsolusi);
-			while ($data_rsolusi = mysqli_fetch_array($qry_rsolusi)) {
-				// Data solusi gizi yang mungkin dimasukkan ke tmp
-				$sql_input = "INSERT INTO tmp_solusi (noip,kd_solusi)
-							 VALUES ('$NOIP','$data_rsolusi[kd_solusi]')";
-				mysqli_query($koneksi, $sql_input);
-			}
-		} 
-		// Gunakan Fungsi
-		DelTmpAnlisa($NOIP);
-		AddTmpAnalisa($TxtKdGejala, $NOIP);
-		AddTmpGejala($TxtKdGejala, $NOIP);
+		foreach ($TxtKdGejala as $gjgj) {
+			# code...
+		
+			$sql_tmp = "SELECT * FROM tmp_analisa 
+						WHERE kd_gejala='$gjgj' 
+						AND noip='$NOIP'";
+			$qry_tmp = mysqli_query($koneksi, $sql_tmp);
+			while ($data_tmp = mysqli_fetch_array($qry_tmp)) {
+				$sql_rsolusi = "SELECT * FROM rule 
+								WHERE kd_solusi='$data_tmp[kd_solusi]' 
+								GROUP BY kd_solusi";
+				$qry_rsolusi = mysqli_query($koneksi, $sql_rsolusi);
+				while ($data_rsolusi = mysqli_fetch_array($qry_rsolusi)) {
+					// Data solusi gizi yang mungkin dimasukkan ke tmp
+					$sql_input = "INSERT INTO tmp_solusi (noip,kd_solusi)
+								 VALUES ('$NOIP','$data_rsolusi[kd_solusi]')";
+					mysqli_query($koneksi, $sql_input);
+				}
+			} 
+			// Gunakan Fungsi
+			DelTmpAnlisa($NOIP);
+			AddTmpAnalisa($gjgj, $NOIP);
+			AddTmpGejala($gjgj, $NOIP);
+		}
 	}	
 	else {
 		# Kode saat tmp_analisa kosong
-		$sql_rgejala = "SELECT * FROM rule WHERE kd_gejala='$TxtKdGejala'";
-		$qry_rgejala = mysqli_query($koneksi, $sql_rgejala);
-		while ($data_rgejala = mysqli_fetch_array($qry_rgejala)) {
-			$sql_rsolusi = "SELECT * FROM rule 
-						   WHERE kd_solusi='$data_rgejala[kd_solusi]' 
-						   GROUP BY kd_solusi";
-			$qry_rsolusi = mysqli_query($koneksi, $sql_rsolusi);
-			while ($data_rsolusi = mysqli_fetch_array($qry_rsolusi)) {
-				// Data solusi gizi yang mungkin dimasukkan ke tmp
-				$sql_input = "INSERT INTO tmp_solusi (noip,kd_solusi)
-							 VALUES ('$NOIP','$data_rsolusi[kd_solusi]')";
-				mysqli_query($koneksi, $sql_input);
-			}
-		} 
-		// Menggunakan Fungsi
-		AddTmpAnalisa($TxtKdGejala, $NOIP);
-		AddTmpGejala($TxtKdGejala, $NOIP);
+		foreach ($TxtKdGejala as $key ) {
+			# code...
+			$sql_rgejala = "SELECT * FROM rule WHERE kd_gejala='$key'";
+			$qry_rgejala = mysqli_query($koneksi, $sql_rgejala);
+			while ($data_rgejala = mysqli_fetch_array($qry_rgejala)) {
+				$sql_rsolusi = "SELECT * FROM rule 
+							   WHERE kd_solusi='$data_rgejala[kd_solusi]' 
+							   GROUP BY kd_solusi";
+				$qry_rsolusi = mysqli_query($koneksi, $sql_rsolusi);
+				while ($data_rsolusi = mysqli_fetch_array($qry_rsolusi)) {
+					// Data solusi gizi yang mungkin dimasukkan ke tmp
+					$sql_input = "INSERT INTO tmp_solusi (noip,kd_solusi)
+								 VALUES ('$NOIP','$data_rsolusi[kd_solusi]')";
+					mysqli_query($koneksi, $sql_input);
+				}
+			} 
+			// Menggunakan Fungsi
+			AddTmpAnalisa($key, $NOIP);
+			AddTmpGejala($key, $NOIP);
+		}
 	}
 	echo "<meta http-equiv='refresh' content='0; url=index.php?page=start'>";
 }

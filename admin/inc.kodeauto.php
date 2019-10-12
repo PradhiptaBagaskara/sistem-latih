@@ -1,8 +1,10 @@
 <?php
 function kdauto($tabel, $inisial) {
+	include 'inc.koneksi.php';
 	$struktur = mysqli_query($koneksi, "SELECT * FROM $tabel");
-	$field = mysqli_field_name($struktur,0);
-	$panjang = mysqli_field_len($struktur,0);
+	$fe = mysqli_fetch_field($struktur);
+	$field = $fe->name;
+	$panjang = $fe->max_length;
 	
 	$qry = mysqli_query($koneksi, "SELECT max(".$field.") FROM ".$tabel);
 	$row = mysqli_fetch_array($qry);

@@ -71,30 +71,43 @@ else {
 <form action="?page=processcon" method="post" name="form1" target="_self">
 	<table class="table" width="100%" border="0" cellpadding="2" cellspacing="1" >
 	<tr class="success">
-				<td colspan="2" >JAWABLAH PERTANYAAN BERIKUT :</td>
+				<td colspan="2" >SILAHKAN PILIH UNTUK MENEMUKAN SOLUSI PENYAKIT :</td>
 	</tr>
-	<tr>
-		<td colspan="2" align="center"><h3><span>Apakah <?php echo "$gejala" ;?> ? </span></h3>
-		
-		<input name="TxtKdGejala" type="hidden" value="<?php echo $kdgejala; ?>"></td>
-	</tr>
+	
+</table>
 
-	<tr>
-		<td>
-			<span class="input-group-text"><input type="radio" name="RbPilih" value="YA" checked>
-			Benar (YA) </span>	
-		</td>
-		</tr><tr>
-		<td>
-			<span class="input-group-text"><input type="radio" name="RbPilih" value="TIDAK">
+		<?php 
+			$ab = mysqli_query($koneksi, " select * from gejala");
+			while ($a = mysqli_fetch_array($ab)) {
+				# code...
+		?>
+<!-- 	<tr>
+		<td> -->
+			<!-- <span class="input-group-text"><input type="checkbox" >
+			 </span> -->
+			<div class="input-group">
+			<span class="input-group-addon">
+			<input type="checkbox" name="TxtKdGejala[]" value="<?php echo  $a['kd_gejala']; ?>">
+			</span>
+			<input class="form-control" value="<?php echo strip_tags($a['nm_gejala']); ?>" readonly>
+			</div><br>
+		<!-- </td>
+		</tr> -->
+		<?php 
+			}
+
+		 ?>
+<!-- 		<td>
+			<span class="input-group-text"><input type="checkbox" name="RbPilih" value="TIDAK">
 			Salah (TIDAK) </span>
 		</td>
-	</tr>
-	<tr>
-		<td align="center">
-			<input type="submit" class="btn btn-success" name="Submit" value="LANJUT >>"></td>
-	</tr>
-	</table>
+	</tr> -->
+	<!-- <tr>
+		<td align="center"> -->
+			<input type="hidden" name="RbPilih" value="YA">
+			<input type="submit" class="btn btn-success text-center" name="Submit" value="LANJUT >>"></td>
+	<!-- /tr>
+	</table> -->
 </form>
 
   </div>
