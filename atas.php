@@ -1,3 +1,15 @@
+<?php 
+
+function replaceWithBr($str)
+{
+    $str = trim($str);
+    $str = str_replace("\r\n", "", $str); 
+    $str = str_replace("\r", "", $str); 
+    $str = str_replace("\n", "", $str);  
+    return $str;
+}
+
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">

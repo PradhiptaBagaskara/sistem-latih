@@ -18,8 +18,10 @@ function AddTmpAnalisa($kdgejala, $NOIP) {
 				  AND noip='$NOIP' ORDER BY rule.kd_solusi,rule.kd_gejala";
 	$qry_solusi = mysqli_query($koneksi, $sql_solusi);
 	while ($data_solusi = mysqli_fetch_array($qry_solusi)) {
+		$kdgejala = replaceWithBr($data_solusi['kd_gejala']);
+
 		$sqltmp = "INSERT INTO tmp_analisa (noip, kd_solusi,kd_gejala)
-					VALUES ('$NOIP','$data_solusi[kd_solusi]','$data_solusi[kd_gejala]')";
+					VALUES ('$NOIP','$kdgejala','$kdgejala')";
 		mysqli_query($koneksi, $sqltmp);
 	}
 }
@@ -64,14 +66,18 @@ if ($RbPilih == "YA") {
 						AND noip='$NOIP'";
 			$qry_tmp = mysqli_query($koneksi, $sql_tmp);
 			while ($data_tmp = mysqli_fetch_array($qry_tmp)) {
+			$kdgejala = replaceWithBr($data_tmp['kd_solusi']);
+
 				$sql_rsolusi = "SELECT * FROM rule 
-								WHERE kd_solusi='$data_tmp[kd_solusi]' 
+								WHERE kd_solusi='$kdgejala' 
 								GROUP BY kd_solusi";
 				$qry_rsolusi = mysqli_query($koneksi, $sql_rsolusi);
 				while ($data_rsolusi = mysqli_fetch_array($qry_rsolusi)) {
 					// Data solusi gizi yang mungkin dimasukkan ke tmp
+					$kdsolusi = replaceWithBr($data_rsolusi['kd_solusi']);
+
 					$sql_input = "INSERT INTO tmp_solusi (noip,kd_solusi)
-								 VALUES ('$NOIP','$data_rsolusi[kd_solusi]')";
+								 VALUES ('$NOIP','$kdsolusi')";
 					mysqli_query($koneksi, $sql_input);
 				}
 			} 
@@ -93,9 +99,10 @@ if ($RbPilih == "YA") {
 							   GROUP BY kd_solusi";
 				$qry_rsolusi = mysqli_query($koneksi, $sql_rsolusi);
 				while ($data_rsolusi = mysqli_fetch_array($qry_rsolusi)) {
+					$kdst = replaceWithBr($data_rsolusi['kd_solusi']);
 					// Data solusi gizi yang mungkin dimasukkan ke tmp
 					$sql_input = "INSERT INTO tmp_solusi (noip,kd_solusi)
-								 VALUES ('$NOIP','$data_rsolusi[kd_solusi]')";
+								 VALUES ('$NOIP','$kdst'";
 					mysqli_query($koneksi, $sql_input);
 				}
 			} 
@@ -116,15 +123,17 @@ if ($RbPilih == "TIDAK") {
 		$sql_rule = "SELECT * FROM tmp_analisa WHERE kd_gejala='$TxtKdGejala'";
 		$qry_rule = mysqli_query($koneksi, $sql_rule);
 		while($hsl_rule = mysqli_fetch_array($qry_rule)){
+			$kds1 = $hsl_rule['kd_solusi'];
+
 			// Hapus daftar rule yang sudah tidak mungkin dari tabel tmp
 			$sql_deltmp = "DELETE FROM tmp_analisa 
-							WHERE kd_solusi='$hsl_rule[kd_solusi]' 
+							WHERE kd_solusi='$kds1' 
 							AND noip='$NOIP'";
 			mysqli_query($koneksi, $sql_deltmp);
 			
 			// Hapus daftar solusi gizi yang sudah tidak ada kemungkinan
 			$sql_deltmp2 = "DELETE FROM tmp_solusi 
-						    WHERE kd_solusi='$hsl_rule[kd_solusi]' 
+						    WHERE kd_solusi='$kds1' 
 						    AND noip='$NOIP'";
 			mysqli_query($koneksi, $sql_deltmp2);
 		}		
@@ -134,14 +143,15 @@ if ($RbPilih == "TIDAK") {
 		$sql_rule= "SELECT * FROM rule ORDER BY kd_solusi,kd_gejala";
 		$qry_rule= mysqli_query($koneksi, $sql_rule);
 		while($hsl_rule=mysqli_fetch_array($qry_rule)){
+			$kds2 = $hsl_rule['kd_gejala'];
 			$sql_intmp = "INSERT INTO tmp_analisa (noip, kd_solusi,kd_gejala)
-						  VALUES ('$NOIP','$hsl_rule[kd_solusi]',
-						  '$hsl_rule[kd_gejala]')";
+						  VALUES ('$NOIP','$kds2',
+						  '$kds2')";
 			mysqli_query($koneksi, $sql_intmp);
 			
 			// Masukkan data solusi gizi yang mungkin terjangkit
 			$sql_intmp2 = "INSERT INTO tmp_solusi(noip,kd_solusi)
-						   VALUES ('$NOIP','$hsl_rule[kd_solusi]')";
+						   VALUES ('$NOIP','$kds2')";
 			mysqli_query($koneksi, $sql_intmp2);				
 		}
 		
@@ -149,14 +159,16 @@ if ($RbPilih == "TIDAK") {
 		$sql_rule2 = "SELECT * FROM rule WHERE kd_gejala='$TxtKdGejala'";
 		$qry_rule2 = mysqli_query($koneksi, $sql_rule2);
 		while($hsl_rule2 = mysqli_fetch_array($qry_rule2)){
+			$kds3 = $hsl_rule2['kd_solusi'];
+
 			$sql_deltmp = "DELETE FROM tmp_analisa 
-						   WHERE kd_solusi='$hsl_rule2[kd_solusi]' 
+						   WHERE kd_solusi='$kds3' 
 						   AND noip='$NOIP'";
 			mysqli_query($koneksi, $sql_deltmp);
 			
 			// Hapus solusi gizi yang sudah tidak mungkin
 			$sql_deltmp2 = "DELETE FROM tmp_solusi 
-							WHERE kd_solusi='$hsl_rule2[kd_solusi]' 
+							WHERE kd_solusi='$kds3' 
 							AND noip='$NOIP'";
 			mysqli_query($koneksi, $sql_deltmp2);
 		}

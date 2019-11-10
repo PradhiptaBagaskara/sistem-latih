@@ -1,4 +1,12 @@
 <?php
+function replaceWithBr($str)
+{
+    $str = trim($str);
+    $str = str_replace("\r\n", "", $str); 
+    $str = str_replace("\r", "", $str); 
+    $str = str_replace("\n", "", $str);  
+    return $str;
+}
 function kdauto($tabel, $inisial) {
 	include 'inc.koneksi.php';
 	$struktur = mysqli_query($koneksi, "SELECT * FROM $tabel");
@@ -21,7 +29,7 @@ function kdauto($tabel, $inisial) {
 	for ($i=1; $i <= ($panjang-strlen($inisial)-strlen($angka)); $i++) {
 			$tmp=$tmp."0";
 	}
-	return $inisial.$tmp.$angka;
+	return replaceWithBr($inisial.$angka);
 }
 ?>
 	

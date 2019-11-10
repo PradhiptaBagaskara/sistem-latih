@@ -69,7 +69,7 @@ while ($data=mysqli_fetch_array($qry)) {
 <?php 
 if (isset($_POST['simpan'])) {
 
-$TxtKodeH = $_REQUEST['TxtKodeH'];
+$TxtKodeH = replaceWithBr($_REQUEST['TxtKodeH']);
 $CekGejala = $_REQUEST['CekGejala'];
 
 # Validasi Form
@@ -90,7 +90,7 @@ $TxtKodeH=$_POST['CmbSolusi'];
 				if ($datapil['kd_gejala'] != $CekGejala[$i]) {
 					$sqldel = "DELETE FROM rule ";
 					$sqldel .= "WHERE kd_solusi='$TxtKodeH' ";
-					$sqldel .= "AND NOT kd_gejala IN ('$CekGejala[$i]')";
+					$sqldel .= "AND NOT kd_gejala IN ('".replaceWithBr($CekGejala[$i])."')";
 					mysqli_query($koneksi, $sqldel);
 				}
 			}
@@ -101,14 +101,14 @@ $TxtKodeH=$_POST['CmbSolusi'];
 			// Perintah untuk mendapat rule
 			$sqlr = "SELECT * FROM rule ";
 			$sqlr .= "WHERE kd_solusi='$TxtKodeH' ";
-			$sqlr .= "AND kd_gejala='$CekGejala[$i]'";
+			$sqlr .= "AND kd_gejala='".replaceWithBr($CekGejala[$i])."'";
 			$qryr = mysqli_query($koneksi, $sqlr);
 			$cocok = mysqli_num_rows($qryr);
 				// Gejala yang baru akan disimpan
 			if (! $cocok==1) {
 			
 			$sql = "INSERT INTO rule (kd_solusi,kd_gejala) ";
-			$sql .= "VALUES ('$TxtKodeH','$CekGejala[$i]')";
+			$sql .= "VALUES ('$TxtKodeH','".replaceWithBr($CekGejala[$i])."')";
 			mysqli_query($koneksi, $sql)
 				or die ("SQL Input rule Gagal".mysqli_error());
 			}

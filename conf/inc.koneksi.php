@@ -1,5 +1,4 @@
 <?php
-
 $my['host']	= "localhost";
 $my['user']	= "root";
 $my['pass']	= "";

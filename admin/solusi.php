@@ -45,7 +45,7 @@
       </tr>
   <tr>
     <td>Kode</td>
-    <td><input class="form-control" name="kode" type="text" maxlength="4" size="6" value="<?php echo kdauto("solusi","P"); ?>" disabled="disabled">
+    <td><input class="form-control" name="kode" type="text" maxlength="4" size="6" value="<?php echo kdauto("solusi","P"); ?>" readonly>
     <input class="form-control" name="kode" type="hidden" value="<?php echo kdauto("solusi","P"); ?>"></td>
   </tr>
   <tr>
@@ -68,7 +68,7 @@
 <?php }		
 		if(isset($_POST['simpan'])){
 
-		$kode=$_POST['kode'];
+		$kode=replaceWithBr($_POST['kode']);
 		$nmsolusi=$_POST['nmsolusi'];
 		$solusi=$_POST['solusi'];
 		
@@ -86,7 +86,7 @@
 
 <?php
 	if(isset($_GET['hapus'])){
-		$id=$_GET['id'];
+		$id=replaceWithBr($_GET['id']);
 		$sql="delete from solusi where kd_solusi='$id'";
 		mysqli_query($koneksi, $sql);
 		echo '<script type="text/javascript">
@@ -139,7 +139,7 @@ $row=mysqli_fetch_array($rs);
 
 		$a=$_POST['a'];
 		$b=$_POST['b'];
-		$id=$_POST[id];
+		$id=replaceWithBr($_POST['id']);
 		
 		$sql="update solusi set nm_solusi='$a', solusi='$b' where kd_solusi='$id'";
 		mysqli_query($koneksi, $sql);
