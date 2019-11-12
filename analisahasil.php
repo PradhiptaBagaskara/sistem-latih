@@ -11,12 +11,12 @@ $sql = "SELECT analisa_hasil.*, solusi.*
 	AND analisa_hasil.noip='$NOIP'
 	ORDER BY analisa_hasil.id DESC LIMIT 1";
 $qry = mysqli_query($koneksi, $sql)
-	or die ("Query Hasil salam".mysqli_error());
+	or die ("Query Hasil salam".mysqli_error($koneksi));
 $data= mysqli_fetch_array($qry);
 
 $sql2 = "SELECT * FROM tmp_pasien WHERE noip='$NOIP'";
 $qry2 = mysqli_query($koneksi, $sql2)
-	or die ("Query Hasil salam".mysqli_error());
+	or die ("Query Hasil salam".mysqli_error($koneksi));
 $data2= mysqli_fetch_array($qry2);
 
 # Membuat hasil Pria atau Wanita
@@ -62,10 +62,11 @@ $data2= mysqli_fetch_array($qry2);
 	$sql_gejala = "SELECT gejala.* FROM gejala,rule
 		WHERE gejala.kd_gejala=rule.kd_gejala
 		AND rule.kd_solusi='$data[kd_solusi]' order by gejala.kd_gejala";
+		$i = 1;
 	$qry_gejala = mysqli_query($koneksi, $sql_gejala);
 	while ($hsl_gejala=mysqli_fetch_array($qry_gejala)) {
-	$i++;
-		echo "$i . $hsl_gejala[nm_gejala] <br>";
+	
+		echo $hsl_gejala['nm_gejala']."</br>";
 	}
 ?>
 		</td>

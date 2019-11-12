@@ -71,7 +71,7 @@ else {
 <form action="?page=processcon" method="post" name="form1" target="_self">
 	<table class="table" width="100%" border="0" cellpadding="2" cellspacing="1" >
 	<tr class="success">
-				<td colspan="2" >SILAHKAN PILIH UNTUK MENEMUKAN SOLUSI PENYAKIT :</td>
+				<td colspan="2" >SILAHKAN PILIH UNTUK MENEMUKAN SOLUSI :</td>
 	</tr>
 	
 </table>
