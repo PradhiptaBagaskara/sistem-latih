@@ -44,7 +44,6 @@
   <tr>
   	<td>Kode</td> 
     <td><input class="form-control" name="kode" type="text" maxlength="4" size="6" value="<?=kdauto("gejala","C"); ?>" readonly>
-    <input type="nb" name="jm" value="<?=kdauto("gejala","C"); ?>">
     <input class="form-control" name="kode" type="hidden" value="<?=kdauto("gejala","C"); ?>">
 	</td>
   </tr>
