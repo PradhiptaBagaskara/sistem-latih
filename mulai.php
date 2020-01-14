@@ -77,7 +77,7 @@ else {
 </table>
 
 		<?php 
-			$ab = mysqli_query($koneksi, " select * from gejala");
+			$ab = mysqli_query($koneksi, " select gejala.* from gejala,rule where gejala.kd_gejala = rule.kd_gejala");
 			while ($a = mysqli_fetch_array($ab)) {
 				# code...
 		?>
